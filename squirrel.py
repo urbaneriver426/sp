@@ -7,4 +7,3 @@ def squirrel(n):
     x = int(x[0])
     return print(x)
 
-squirrel(n)
