@@ -4,4 +4,4 @@ def squirrel(N):
         x = x * i
     x = str(x)
     x = int(x[0])
-    return print(x)
+    return x
