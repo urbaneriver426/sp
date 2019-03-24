@@ -2,9 +2,9 @@ def ConquestCampaign(N,M,L,battalion):
     sqr = []
     days = 1
     count = 1
-    if m*n == 0:
+    if M*N == 0:
         return 0
-    elif l == m*n:
+    elif L == M*N:
         return days
     for i in range(N):
         sqr.append([])
