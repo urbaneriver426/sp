@@ -1,3 +1,5 @@
+n = 10
+hits = [2,8,1,5,4,3,2,8,1,6,1]
 def PatternUnlock(N, hits):
     curr = hits[0]
     prvs = 0
@@ -55,4 +57,6 @@ def PatternUnlock(N, hits):
     for i in range(len(count)):
         if count[i] != "." and count[i] != "0":
             password += count[i]
+            if len(password) == 6:
+                return password
     return password
