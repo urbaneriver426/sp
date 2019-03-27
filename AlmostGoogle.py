@@ -45,7 +45,7 @@ def WordSearch(lens, s, subs):
                                     test_arr2.append("") #добавляем в список пустую строку
                                     lines += 1 #счетчик по списку +1
                                     y = ""
-                                    
+
         else: #если это не первая итерация
             x = test_arr1[i]
             if len(test_arr2[lines])+len(x) <= lens: #самый простой вариант, при котором сумма длин последнего элемента в списке-2 
@@ -83,6 +83,7 @@ def WordSearch(lens, s, subs):
                                     count = 0 #обнуляем счетчик по слову
                                 else:
                                     test_arr2.append(y)
+                                    lines += 1 #счетчик по списку +1
                                     y = "" #обнуляем переменнную у
                                     count = 0 #обнуляем счетчик по слову
                             if j == len(x)-1: #если итерация по слову
@@ -98,8 +99,6 @@ def WordSearch(lens, s, subs):
                                         test_arr2.append("") #добавляем в список пустую строку
                                         lines += 1 #счетчик по списку +1
                                         y = ""                
-            print(test_arr2)
-            print(lines)
 
     for i in range(len(test_arr2)):
         x = test_arr2[i]
@@ -113,4 +112,4 @@ def WordSearch(lens, s, subs):
             else:
                 y += x[j]
 
-    return result  
+    return result 
