@@ -1,80 +1,116 @@
 def WordSearch(lens, s, subs):
-    start = 0
-    count = 0
-    point = 0
-    lines = 0
-    test_arr = []
-    test_arr2 = []
-    result = []
-    for i in range(len(s)):
-        if s[i] == " ":
-            test_arr.append([])
-            lines += 1
-            x = ""
-            for j in range(start, i+1):
-                x += s[j]
-            test_arr[lines-1].append(x)
-            if i != len(s)-1:
-                start = i+1
-        elif i == len(s)-1:
-            test_arr.append([])
-            lines += 1
-            x = ""
-            for j in range(start, i+1):
-                x += s[j]
-            test_arr[lines-1].append(x)
+    start = 0 #точка отстчета для циклов
+    count = 0 #счетчик действий для циклов
+    point = 0 #промежуточная точка для циклов
+    lines = 0 #счетчик списков
+    test_arr1 = [] #список для разбивки по словам
+    test_arr2 = [] #список для разбивки на строки (далее "список-1 ")
+    result = [] #список для результата
+    x = ""
+    y = ""
 
-    for i in range(len(test_arr)):
-        if i == 0:
-            test_arr2.append(test_arr[i])
+    #цикл для разбивки фразы по словам
+    for i in range(len(s)):
+        x += s[i]
+        if s[i] == " " or i == len(s)-1:
+            test_arr1.append(x)
+            lines += 1
+            x = ""
+            y = ""
+
+    for i in range(len(test_arr1)):
+        if i == 0: #первая итерация по списку
             lines = 0
-        else:
-            if len(test_arr2[lines][0])+len(test_arr[i][0]) <= lens:
-                test_arr2[lines][0] = test_arr2[lines][0]+test_arr[i][0]
-                test_arr2.append([])
-                count += 1
-                test_arr2[lines].append("")
-            elif len(test_arr2[lines][0])+len(test_arr[i][0]) > lens:
-                if len(test_arr[i][0]) <= lens:
-                    lines += 1
-                    test_arr2.append(test_arr[i])
-                else:
-                    if len(test_arr2[lines][0]) == 0:
-                        x = test_arr[i][0]
-                        for j in range(len(x)):
-                            count += 1
-                            if count == 1:
-                                y = x[j]
-                                if count == 1 and j == len(x)-1 and y = " ":
-                                    test_arr2.append([])
-                                    lines += 1
-                                    test_arr2[lines].append("")
-                            else:
-                                y += x[j]
-                                if j == lens-1:
-                                    test_arr2[lines][0] = test_arr2[lines][0]+y
-                                elif count == lens:
-                                    test_arr2.append([])
-                                    lines += 1
-                                    test_arr2[lines].append(y)
-                                elif j == len(x)-1:
-                                    test_arr2.append([])
-                                    lines += 1
-                                    test_arr2[lines].append(y)
+            if len(test_arr1[i]) <= lens: #самый простой вариант, при котором первое слово меньше заданной длины
+                test_arr2.append(test_arr1[i]) #добавляем первое слово первым элементом в список
+            else: #если первое условие не пройдено
+                x = test_arr1[i] #присваиваем переменной x значение первого слова
+                for j in range(len(x)): #запускаем цикл разбития слова по заданной длине
+                        count += 1 #счетчик по слову +1
+                        y += x[j] #к переменной у прибавляется символ с заданным номером 
+                        if count == lens: #если счетчик по слову равен заданной длине
+                            test_arr2.append(y) #добавляем переменную у как элемент в список
+                            y = "" #обнуляем переменнную у
+                            count = 0 #обнуляем счетчик по слову
+                        if j == len(x)-1: #если итерация по слову
+                            if count == 1 and y == " ": #если счетчик равен 1 и последний элемент это пробел
+                                if i < len(test_arr1)-1: #если это не последняя итерация по списку
+                                    test_arr2.append("") #добавляем в список пустую строку
+                                    lines += 1 #счетчик по списку +1
+                                    y = ""
+                            else: #если условие про счетчик и пробел не пройдено
+                                test_arr2.append(y) #добавляем переменную у как элемент в список
+                                lines += 1 #счетчик по списку +1
+                                if i < len(test_arr1)-1: #это не последняя итерация по списку
+                                    test_arr2.append("") #добавляем в список пустую строку
+                                    lines += 1 #счетчик по списку +1
+                                    y = ""
+                                    
+        else: #если это не первая итерация
+            x = test_arr1[i]
+            if len(test_arr2[lines])+len(x) <= lens: #самый простой вариант, при котором сумма длин последнего элемента в списке-2 
+                                                    #и проверяемого слова в списке-1 меньше или равна заданной длине 
+                test_arr2[lines] = test_arr2[lines] + x #прибавляем к последнему элементу списка-2 проверяемое слово
+            
+            elif len(test_arr2[lines])+len(x) >= lens: #если сумма  длин последнего элемента в списке-2 и проверяемого слова в списке-1
+                                                        # больше заданной длины         
+                if len(test_arr2[lines])+len(x[0:(len(x)-1)]) == lens: #проверяем если проверяеммая сумма - 1 равна заданной длине
+                    
+                    test_arr2[lines] = test_arr2[lines] + x[0:(len(x)-1)] #прибавляем к последнему элементу списка-2
+                                                                    #проверяемое слово за исключением последнего пробела
+                
+                elif len(x) <= lens: #если проверяемое слово меньше и равно заданной длине
+                    test_arr2.append(x) #добавляем в список-2 проверяемое слово
+                    lines += 1 #увеличиваем счетчик списка на 1
+
+                elif len(x) > lens: #если элемент списка больше заданной длины
+                    
+                    if len(x) == lens+1: #если проверяемое слово больше заданной длины на 1
+                        if len(test_arr2[lines]) == 0:
+                            test_arr2[lines] = test_arr2[lines] + x[0:(len(x)-1)]
+                        else:
+                            test_arr2.append(x[0:(len(x)-1)]) #добавляем в список-2 проверяемое слово без последнего пробела
+                            lines += 1 #увеличиваем счетчик списка на 1
 
                     else:
-                        x = test_arr[i][0]
-                    for j in range(len(x)):
-                        if j == 0 or j == lens:
-                            y = x[j]
-                        else:
-                            y += x[j]
-                        if j == lens-1:
-                            test_arr2.append([])
-                            lines += 1
-                            test_arr2[lines].append(y)
-                        elif j == len(x)-1:
-                            test_arr2.append([])
-                            count += 1
-                            test_arr2[lines].append(y)
-    return test_arr2
+                        for j in range(len(x)): #запускаем цикл разбития слова по заданной длине
+                            count += 1 #счетчик по слову +1
+                            y += x[j] #к переменной у прибавляется символ с заданным номером 
+                            if count == lens: #если счетчик по слову равен заданной длине
+                                if len(test_arr2[lines]) == 0:
+                                    test_arr2[lines] = test_arr2[lines] + y
+                                    y = "" #обнуляем переменнную у
+                                    count = 0 #обнуляем счетчик по слову
+                                else:
+                                    test_arr2.append(y)
+                                    y = "" #обнуляем переменнную у
+                                    count = 0 #обнуляем счетчик по слову
+                            if j == len(x)-1: #если итерация по слову
+                                if count == 1 and y == " ": #если счетчик равен 1 и последний элемент это пробел
+                                    if i < len(test_arr1)-1: #если это не последняя итерация по списку
+                                        test_arr2.append("") #добавляем в список пустую строку
+                                        lines += 1 #счетчик по списку +1
+                                        y = ""
+                                else: #если условие про счетчик и пробел не пройдено
+                                    test_arr2.append(y) #добавляем переменную у как элемент в список
+                                    lines += 1 #счетчик по списку +1
+                                    if i < len(test_arr1)-1: #это не последняя итерация по списку
+                                        test_arr2.append("") #добавляем в список пустую строку
+                                        lines += 1 #счетчик по списку +1
+                                        y = ""                
+            print(test_arr2)
+            print(lines)
+
+    for i in range(len(test_arr2)):
+        x = test_arr2[i]
+        y = ""
+        result.append(0)
+        for j in range(len(x)):
+            if x[j] == " ":
+                if y == subs:
+                    result[i] += 1
+                y = ""
+            else:
+                y += x[j]
+
+    return result  
