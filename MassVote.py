@@ -1,6 +1,5 @@
 def MassVote(n, votes):
 	sumOfVoices = 0
-	listOfCandidates = {}
 	count = 0
 
 	for i in range(n):
