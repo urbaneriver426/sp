@@ -14,7 +14,7 @@ def MassVote(n, votes):
 		else:
 			nextCand = round(votes[j] / (sumOfVoices * 0.01), 2)
 			if nextCand > winnerPercent:
-				winnerPercent = next_cand
+				winnerPercent = nextCand
 				winnerNumber = str(j+1)
 				count = 0
 			elif nextCand == winnerPercent:
