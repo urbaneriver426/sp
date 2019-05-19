@@ -1,11 +1,11 @@
-def ShopOLAP (items):
+def ShopOLAP (n, items):
     checkedItems = []
     prices = []
     result = []
     def LastLetter(s):
         return s[-1]
 
-    for i in range(len(items)):
+    for i in range(n):
         count = 0
         if i == 0:
             checkedItems.append(items[0][0:len(items[0])-1])
@@ -25,3 +25,6 @@ def ShopOLAP (items):
                 checkedItems[j] += str(prices[j])
         checkedItems.sort()
         checkedItems.sort(key=LastLetter, reverse=True)
+
+    
+    return checkedItems
