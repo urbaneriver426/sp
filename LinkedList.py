@@ -81,9 +81,6 @@ class LinkedList:
 					previousNode = currentNode
 					currentNode = currentNode.next
 
-	def test_delete(self):
-		pass
-
 	def clean(self):
 		self.head = None
 		self.tail = None
