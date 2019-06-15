@@ -60,6 +60,7 @@ class LinkedList:
 						return
 		if all==False:
 			while currentNode is not None:
+				print("Проверяемый узел ", currentNode.value)
 				if currentNode.value == val:
 					previousNode.next = currentNode.next
 					if currentNode is self.tail:
@@ -80,6 +81,9 @@ class LinkedList:
 					previousNode = currentNode
 					currentNode = currentNode.next
 
+	def test_delete(self):
+		pass
+
 	def clean(self):
 		self.head = None
 		self.tail = None
@@ -99,7 +103,7 @@ class LinkedList:
 			currentNode = self.head
 			previousNode = None
 			while currentNode is not None:
-				if currentNode.value == afterNode.value:
+				if currentNode is afterNode:
 					newNode.next, currentNode.next = currentNode.next, newNode
 					if currentNode is self.tail:
 						self.tail = newNode
